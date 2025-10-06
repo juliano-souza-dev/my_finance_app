@@ -1,48 +1,50 @@
-/* components/EntryForm/entryForm.module.css */
-/* Este arquivo usa variáveis de cor definidas em app/styles/globals.css */
+
 
 .formPageContainer {
-    padding-top: 20px;
+    width: 100%;
+    padding: 18px;
+     max-width: 800px;
+    margin:  0 auto;
+}
+.formTitle{
+    font-size: 0.99rem;
+    color: #757373;
 }
 
-.formTitle {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--surface-color);
-    padding-bottom: 10px;
+.categoryRadio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 3px;
 }
-
-/* O container principal do formulário (simulando um card) */
 .formCard {
     background-color: var(--surface-color);
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+   
 }
 
 .formLayout {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+  
 }
 
-/* Campos em linha (Data e Valor) */
 .formRowGroup {
     display: flex;
-    flex-direction: column; /* PADRÃO MOBILE: Um campo abaixo do outro (COLUNA) */
-    gap: 20px;
+    flex-direction: column;
+   
 }
 
-/* Responsividade: Desktop/Tablet */
 @media screen and (min-width: 481px) {
     .formRowGroup {
-        flex-direction: row; /* DESKTOP: Campos lado a lado (LINHA) */
+        flex-direction: row;
         gap: 25px;
     }
     .formRowGroup > div, .formRowGroup > fieldset {
-        flex: 1; /* Distribui o espaço igualmente */
+        flex: 1; 
     }
 }
 
@@ -58,7 +60,6 @@
     font-weight: 500;
 }
 
-/* Estilo de Inputs (campos de texto, data, number, select) */
 .textInput {
     width: 100%;
     padding: 12px;
@@ -74,7 +75,6 @@
     border-color: var(--primary-color);
 }
 
-/* Estado de Erro */
 .inputError {
     border-color: var(--error-color) !important;
 }
@@ -86,7 +86,6 @@
 }
 
 
-/* Opções Radio/Checkbox */
 .radioCheckGroup {
     flex-direction: column; 
     gap: 20px;
@@ -116,7 +115,6 @@
     cursor: pointer;
 }
 
-/* Personalização do rádio button */
 .customRadio {
     appearance: none; 
     width: 18px;
@@ -134,7 +132,6 @@
 }
 
 
-/* Botão de Submissão */
 .submitButton {
     width: 100%;
     padding: 12px;
@@ -155,7 +152,6 @@
     background-color: #333; 
 }
 
-/* Mensagens de Feedback */
 .feedbackMessage {
     padding: 12px;
     border-radius: 8px;

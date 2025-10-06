@@ -5,7 +5,6 @@ import { EntryFormData, EntryFormSchema } from "@/schemas/entrySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-// IMPORTAÇÃO DO MÓDULO CSS
 import styles from './entryform.module.css';
 
 const TYPE_OPTIONS = ["Entrada", "Saída"];
@@ -35,7 +34,6 @@ export function EntryForm() {
     },
   });
   const onSubmit = async (data: EntryFormData) => {
-    alert("ok");
     setMessage("");
     setIsSubmitting(true);
 
@@ -73,13 +71,13 @@ export function EntryForm() {
   return (
     <div className={styles.formPageContainer}>
       <h2 className={styles.formTitle}>
-        Novo Lançamento Financeiro
+        Adicionar movimentação
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className={`${styles.formCard} ${styles.formLayout}`}>
-        {/* Campo DATA e VALOR em linha (Responsivo) */}
+       
         <div className={styles.formRowGroup}>
-          {/* 1. Campo DATA */}
+          
           <div className={styles.formGroup}>
             <label
               htmlFor="date"
@@ -98,7 +96,23 @@ export function EntryForm() {
             )}
           </div>
 
-          {/* 2. Campo VALOR */}
+        <div className={styles.formGroup}>
+            <label
+              htmlFor="description"
+              className={styles.inputLabel}
+            >
+              descrição:
+            </label>
+            <input
+              type="text"
+              id="description"
+              {...register("description")}
+              className={`${styles.textInput} ${errors.date ? styles.inputError : ""}`}
+            />
+            {errors.date && (
+              <p className={styles.errorMessage}>{errors.date.message}</p>
+            )}
+          </div>
           <div className={styles.formGroup}>
             <label
               htmlFor="value"
@@ -121,28 +135,9 @@ export function EntryForm() {
           </div>
         </div>
 
-        {/* 3. Campo DESCRIÇÃO */}
-        <div className={styles.formGroup}>
-          <label
-            htmlFor="description"
-            className={styles.inputLabel}
-          >
-            Descrição:
-          </label>
-          <input
-            type="text"
-            id="description"
-            {...register("description")}
-            className={`${styles.textInput} ${errors.description ? styles.inputError : ""}`}
-          />
-          {errors.description && (
-            <p className={styles.errorMessage}>
-              {errors.description.message}
-            </p>
-          )}
-        </div>
+        
 
-        {/* 4. Campo CATEGORIA */}
+        
         <div className={styles.formGroup}>
           <label
             htmlFor="category"
@@ -169,8 +164,8 @@ export function EntryForm() {
           )}
         </div>
 
-        {/* 5 & 6. TIPO e STATUS (Em linha) */}
-        <div className={`${styles.formRowGroup} ${styles.radioCheckGroup}`}>
+     
+        <div className={`${styles.formRowGroup} ${styles.radioCheckGroup} ${styles.categoryRadio}`}>
           {/* TIPO */}
           <fieldset className={styles.radioFieldset}>
             <legend className={styles.inputLabel}>
@@ -226,16 +221,21 @@ export function EntryForm() {
           </fieldset>
         </div>
 
-        {/* Botão de Envio */}
         <button
           type="submit"
           disabled={isSubmitting}
           className={styles.submitButton}
         >
-          {isSubmitting ? "Enviando Registro..." : "Registrar Lançamento"}
+          {isSubmitting ? (
+            <>
+              <span className="spinner"></span> 
+              Enviando Registro...
+            </>
+          ) : (
+            "Registrar Lançamento"
+          )}
         </button>
 
-        {/* Mensagem de Feedback */}
         {message && (
           <p
             className={`${styles.feedbackMessage} ${
