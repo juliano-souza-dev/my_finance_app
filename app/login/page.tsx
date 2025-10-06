@@ -1,8 +1,8 @@
-// src/pages/login.tsx (CORRIGIDO)
+"use client"
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext"; // Hook de autenticação
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

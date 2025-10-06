@@ -14,11 +14,11 @@ export default function RootLayout({
 }>) {
   return (
    
-      <html lang="en">
+      <html suppressHydrationWarning>
         <body>
             <AuthProvider>
             <Navbar />
-            {children}
+          {children}
           </AuthProvider>
         </body>
       </html>
