@@ -1,42 +1,112 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* app/styles/globals.css */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
+/* --- CSS RESET (MANTIDO) --- */
+*, *::before, *::after {
   box-sizing: border-box;
-  padding: 0;
+}
+
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
   margin: 0;
+  padding: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+ul[role='list'], ol[role='list'] {
+  list-style: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+/* ----------------------------- */
+
+
+/* --- DARK MODE E VARIÁVEIS --- */
+:root {
+  /* Cores do Dark Mode */
+  --primary-color: #4CAF50; /* Um verde/azul vibrante que funciona bem no escuro */
+  --text-color: #E0E0E0;   /* Texto branco suave */
+  --bg-color: #121212;     /* Fundo muito escuro */
+  --surface-color: #1F1F1F; /* Cor para cartões e caixas */
+  --error-color: #FF5252;
+}
+
+/* --- MOBILE FIRST E ESTILOS GERAIS --- */
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  /* Aplica as cores do Dark Mode */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  
+  /* Ajuda na simulação Mobile First (Centraliza a "tela" do celular no desktop) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+/* Limita o conteúdo principal para simular o tamanho de um celular (Mobile First) */
+main {
+    width: 100%;
+    max-width: 480px; 
+    background-color: var(--bg-color); 
+    
+    /* CORREÇÃO PRINCIPAL: Usamos 'min-height' para permitir que o conteúdo se estenda */
+    /* Usamos '100dvh' (Dynamic Viewport Height) para uma melhor compatibilidade com barras de endereço móveis */
+    min-height: 100dvh; 
+    
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
+    /* PADRÃO MOBILE: Padding em baixo para a Navbar inferior (60px altura navbar + 20px margem) */
+    padding-top: 20px; 
+    padding-bottom: 80px; /* AUMENTADO para garantir que o conteúdo não fique por baixo da navbar */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* O bloco @media screen and (min-width: 481px) para desktop permanece o mesmo. */
+@media screen and (min-width: 481px) {
+    main {
+        max-width: none;
+        margin: 0 auto;
+        min-height: 100vh;
+        box-shadow: none;
+        
+        padding-top: 70px; 
+        padding-bottom: 20px; 
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+/* Estilo para formulários e cards (usando a cor de superfície) */
+form, .card {
+    background-color: var(--surface-color);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para a cor primária (botões, links) */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: color-mix(in srgb, var(--primary-color) 80%, white);
 }

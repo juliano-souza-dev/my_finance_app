@@ -1,10 +1,12 @@
 "use client";
-import { useRequireAuth } from "@/hooks/useRequireAuth"; // 👈 Importa o hook de proteção
 
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { EntryFormData, EntryFormSchema } from "@/schemas/entrySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+// IMPORTAÇÃO DO MÓDULO CSS
+import styles from './entryform.module.css';
 
 const TYPE_OPTIONS = ["Entrada", "Saída"];
 const STATUS_OPTIONS = ["Pago", "Pendente"];
@@ -63,27 +65,25 @@ export function EntryForm() {
   };
   const isAuthenticated = useRequireAuth();
 
-  // 2. Se não estiver autenticado (e o redirecionamento ainda não aconteceu),
-  // mostra um estado de carregamento ou nulo.
   if (!isAuthenticated) {
     return (
-      <div className="text-center p-10">Carregando ou Redirecionando...</div>
+      <div className={styles.loadingState}>Carregando ou Redirecionando...</div>
     );
   }
   return (
-    <div className="max-w-xl mx-auto my-10 p-6 bg-white shadow-xl rounded-lg border border-gray-100">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+    <div className={styles.formPageContainer}>
+      <h2 className={styles.formTitle}>
         Novo Lançamento Financeiro
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className={`${styles.formCard} ${styles.formLayout}`}>
         {/* Campo DATA e VALOR em linha (Responsivo) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className={styles.formRowGroup}>
           {/* 1. Campo DATA */}
-          <div>
+          <div className={styles.formGroup}>
             <label
               htmlFor="date"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className={styles.inputLabel}
             >
               Data:
             </label>
@@ -91,20 +91,18 @@ export function EntryForm() {
               type="date"
               id="date"
               {...register("date")}
-              className={`w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
-                errors.date ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`${styles.textInput} ${errors.date ? styles.inputError : ""}`}
             />
             {errors.date && (
-              <p className="mt-1 text-sm text-red-600">{errors.date.message}</p>
+              <p className={styles.errorMessage}>{errors.date.message}</p>
             )}
           </div>
 
           {/* 2. Campo VALOR */}
-          <div>
+          <div className={styles.formGroup}>
             <label
               htmlFor="value"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className={styles.inputLabel}
             >
               Valor:
             </label>
@@ -113,12 +111,10 @@ export function EntryForm() {
               step="0.01"
               id="value"
               {...register("value", { valueAsNumber: true })}
-              className={`w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
-                errors.value ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`${styles.textInput} ${errors.value ? styles.inputError : ""}`}
             />
             {errors.value && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className={styles.errorMessage}>
                 {errors.value.message}
               </p>
             )}
@@ -126,10 +122,10 @@ export function EntryForm() {
         </div>
 
         {/* 3. Campo DESCRIÇÃO */}
-        <div>
+        <div className={styles.formGroup}>
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className={styles.inputLabel}
           >
             Descrição:
           </label>
@@ -137,31 +133,27 @@ export function EntryForm() {
             type="text"
             id="description"
             {...register("description")}
-            className={`w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
-              errors.description ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`${styles.textInput} ${errors.description ? styles.inputError : ""}`}
           />
           {errors.description && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className={styles.errorMessage}>
               {errors.description.message}
             </p>
           )}
         </div>
 
         {/* 4. Campo CATEGORIA */}
-        <div>
+        <div className={styles.formGroup}>
           <label
             htmlFor="category"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className={styles.inputLabel}
           >
             Categoria:
           </label>
           <select
             id="category"
             {...register("category")}
-            className={`w-full p-2 border rounded-md shadow-sm bg-white focus:ring-blue-500 focus:border-blue-500 ${
-              errors.category ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`${styles.textInput} ${errors.category ? styles.inputError : ""}`}
           >
             <option value="">Selecione a Categoria</option>
             {CATEGORY_OPTIONS.map((cat) => (
@@ -171,63 +163,63 @@ export function EntryForm() {
             ))}
           </select>
           {errors.category && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className={styles.errorMessage}>
               {errors.category.message}
             </p>
           )}
         </div>
 
         {/* 5 & 6. TIPO e STATUS (Em linha) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div className={`${styles.formRowGroup} ${styles.radioCheckGroup}`}>
           {/* TIPO */}
-          <fieldset>
-            <legend className="block text-sm font-medium text-gray-700 mb-2">
+          <fieldset className={styles.radioFieldset}>
+            <legend className={styles.inputLabel}>
               Tipo:
             </legend>
-            <div className="flex space-x-4">
+            <div className={styles.radioOptionsContainer}>
               {TYPE_OPTIONS.map((opt) => (
                 <label
                   key={opt}
-                  className="inline-flex items-center text-gray-700"
+                  className={styles.radioLabel}
                 >
                   <input
                     type="radio"
                     value={opt}
                     {...register("type")}
-                    className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                    className={styles.customRadio}
                   />
-                  <span className="ml-2 capitalize">{opt}</span>
+                  <span className={styles.radioText}>{opt}</span>
                 </label>
               ))}
             </div>
             {errors.type && (
-              <p className="mt-1 text-sm text-red-600">{errors.type.message}</p>
+              <p className={styles.errorMessage}>{errors.type.message}</p>
             )}
           </fieldset>
 
           {/* STATUS */}
-          <fieldset>
-            <legend className="block text-sm font-medium text-gray-700 mb-2">
+          <fieldset className={styles.radioFieldset}>
+            <legend className={styles.inputLabel}>
               Status:
             </legend>
-            <div className="flex space-x-4">
+            <div className={styles.radioOptionsContainer}>
               {STATUS_OPTIONS.map((opt) => (
                 <label
                   key={opt}
-                  className="inline-flex items-center text-gray-700"
+                  className={styles.radioLabel}
                 >
                   <input
                     type="radio"
                     value={opt}
                     {...register("status")}
-                    className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                    className={styles.customRadio}
                   />
-                  <span className="ml-2 capitalize">{opt}</span>
+                  <span className={styles.radioText}>{opt}</span>
                 </label>
               ))}
             </div>
             {errors.status && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className={styles.errorMessage}>
                 {errors.status.message}
               </p>
             )}
@@ -238,11 +230,7 @@ export function EntryForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full py-3 px-4 rounded-lg text-white font-semibold transition duration-150 ${
-            isSubmitting
-              ? "bg-blue-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-          }`}
+          className={styles.submitButton}
         >
           {isSubmitting ? "Enviando Registro..." : "Registrar Lançamento"}
         </button>
@@ -250,10 +238,10 @@ export function EntryForm() {
         {/* Mensagem de Feedback */}
         {message && (
           <p
-            className={`p-3 rounded-lg text-center font-medium ${
+            className={`${styles.feedbackMessage} ${
               message.startsWith("✅")
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
+                ? styles.successMessage
+                : styles.errorFeedbackMessage
             }`}
           >
             {message}

@@ -3,12 +3,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext"; // Hook de autenticação
+import { useAuth } from "@/contexts/AuthContext"; 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-// --- 1. Definição do Schema Zod para o Login ---
-// ✅ MOVIDO: A chamada do useAuth DEVE estar dentro do componente!
+
 const LoginSchema = z.object({
   username: z
     .string()
@@ -23,12 +22,10 @@ type LoginFormData = z.infer<typeof LoginSchema>;
  * @description Componente da página de login.
  */
 function LoginPage() {
-  // ✅ 1. CHAME TODOS OS HOOKS NO TOPO DA FUNÇÃO!
-  const { login, isAuthenticated } = useAuth(); // CORRIGIDO: Agora dentro do componente
+  const { login, isAuthenticated } = useAuth(); 
   const router = useRouter();
 
   const {
-    // CORRIGIDO: useForm não é mais chamado condicionalmente
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -36,35 +33,26 @@ function LoginPage() {
     resolver: zodResolver(LoginSchema),
   });
 
-  // Se o usuário JÁ estiver logado, redireciona para a página inicial (/)
-  // A lógica condicional DEVE vir APÓS a chamada dos Hooks.
+
   if (isAuthenticated) {
     router.push("/");
-    return null; // Não renderiza nada enquanto redireciona
+    return null; 
   }
 
-  // --- 2. Lógica de Submissão do Formulário ---
   const onSubmit = async (data: LoginFormData) => {
-    // ⚠️ Em um projeto real, aqui você chamaria sua API de autenticação.
-    // Ex: const response = await fetch('/api/login', { method: 'POST', body: JSON.stringify(data) });
+   
 
-    console.log("Tentativa de Login com:", data.username);
-
-    // SIMULAÇÃO DE SUCESSO DE LOGIN:
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Chama a função login() do contexto com o nome do usuário.
     login(data.username);
 
-    // Garante o redirecionamento.
     router.push("/");
   };
 
-  // --- 3. Renderização do Formulário com Tailwind ---
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-2xl">
-        <h2 className="text-3xl font-bold text-center text-gray-900">
+    <div >
+      <div >
+        <h2>
           Acesso ao Sistema
         </h2>
 
@@ -73,7 +61,7 @@ function LoginPage() {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
+              className=""
             >
               Usuário:
             </label>
@@ -81,12 +69,9 @@ function LoginPage() {
               id="username"
               type="text"
               {...register("username")}
-              className={`w-full px-4 py-2 mt-1 border rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
-                errors.username ? "border-red-500" : "border-gray-300"
-              }`}
             />
             {errors.username && (
-              <p className="mt-1 text-sm text-red-600">
+              <p >
                 {errors.username.message}
               </p>
             )}

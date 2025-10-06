@@ -1,0 +1,176 @@
+/* components/EntryForm/entryForm.module.css */
+/* Este arquivo usa variáveis de cor definidas em app/styles/globals.css */
+
+.formPageContainer {
+    padding-top: 20px;
+}
+
+.formTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--surface-color);
+    padding-bottom: 10px;
+}
+
+/* O container principal do formulário (simulando um card) */
+.formCard {
+    background-color: var(--surface-color);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.formLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Campos em linha (Data e Valor) */
+.formRowGroup {
+    display: flex;
+    flex-direction: column; /* PADRÃO MOBILE: Um campo abaixo do outro (COLUNA) */
+    gap: 20px;
+}
+
+/* Responsividade: Desktop/Tablet */
+@media screen and (min-width: 481px) {
+    .formRowGroup {
+        flex-direction: row; /* DESKTOP: Campos lado a lado (LINHA) */
+        gap: 25px;
+    }
+    .formRowGroup > div, .formRowGroup > fieldset {
+        flex: 1; /* Distribui o espaço igualmente */
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputLabel {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+/* Estilo de Inputs (campos de texto, data, number, select) */
+.textInput {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #000;
+    color: var(--text-color);
+    transition: border-color 0.3s;
+}
+
+.textInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Estado de Erro */
+.inputError {
+    border-color: var(--error-color) !important;
+}
+
+.errorMessage {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    margin-top: 5px;
+}
+
+
+/* Opções Radio/Checkbox */
+.radioCheckGroup {
+    flex-direction: column; 
+    gap: 20px;
+}
+@media screen and (min-width: 481px) {
+    .radioCheckGroup {
+        flex-direction: row;
+        gap: 25px;
+    }
+}
+
+.radioFieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.radioOptionsContainer {
+    display: flex;
+    gap: 15px;
+    padding-top: 5px;
+}
+
+.radioLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Personalização do rádio button */
+.customRadio {
+    appearance: none; 
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--text-color);
+    background-color: transparent;
+    transition: all 0.2s ease;
+    margin-right: 5px;
+}
+
+.customRadio:checked {
+    border: 5px solid var(--primary-color);
+    background-color: transparent;
+}
+
+
+/* Botão de Submissão */
+.submitButton {
+    width: 100%;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #333; 
+}
+
+/* Mensagens de Feedback */
+.feedbackMessage {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.successMessage {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.errorFeedbackMessage {
+    background-color: rgba(255, 82, 82, 0.15);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}

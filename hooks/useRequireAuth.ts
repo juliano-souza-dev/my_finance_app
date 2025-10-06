@@ -1,12 +1,12 @@
-// src/hooks/useRequireAuth.ts
+"use client"
 
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function useRequireAuth() {
-  const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     // Redireciona APENAS se o estado for FALSE (checou e não está logado)
