@@ -3,23 +3,35 @@
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { EntryFormData, EntryFormSchema } from "@/schemas/entrySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from './entryform.module.css';
+import { fetchJson } from "@/lib/api";
+import { CategoryRepository } from "@/lib/repositories/CategoryRepository";
 
 const TYPE_OPTIONS = ["Entrada", "Saída"];
 const STATUS_OPTIONS = ["Pago", "Pendente"];
-const CATEGORY_OPTIONS = [
-  "Alimentação",
-  "Moradia",
-  "Transporte",
-  "Salário",
-  "Outro",
-];
+interface Category {
+  id: string;
+  name: string;
+}
 
+interface EntryFormProps {
+    categoryOptions: Category[]; 
+}
 export function EntryForm() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([])
+
+
+    useEffect(() => {
+    const fetchCategories = async () => {
+      const categories: Category[] = await fetchJson<Category[]>('api/category')
+      setCategories(categories)
+    }
+     fetchCategories();
+  },[])
 
   const {
     register,
@@ -138,7 +150,7 @@ export function EntryForm() {
         
 
         
-        <div className={styles.formGroup}>
+        <div className={`${styles.formGroup} ${styles.formGroupCategory}`}>
           <label
             htmlFor="category"
             className={styles.inputLabel}
@@ -147,13 +159,14 @@ export function EntryForm() {
           </label>
           <select
             id="category"
+            size={8}
             {...register("category")}
             className={`${styles.textInput} ${errors.category ? styles.inputError : ""}`}
           >
-            <option value="">Selecione a Categoria</option>
-            {CATEGORY_OPTIONS.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+          
+            {categories.map((category: Category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
               </option>
             ))}
           </select>

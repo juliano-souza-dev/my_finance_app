@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import Database, { Database as DatabaseType } from "better-sqlite3";
 
 import path from "path";
 import { promises as fs } from "fs";
@@ -10,7 +10,7 @@ await fs.mkdir(dataDir, { recursive: true })
 
 const dbPath = path.join(dataDir, "meufinanceiro.db");
 
-const db = new Database(dbPath)
+const db: DatabaseType = new Database(dbPath)
 
 db.prepare(
     `
@@ -29,16 +29,18 @@ db.prepare(
 db.prepare(`
   CREATE TABLE IF NOT EXISTS sync_info (
     id INTEGER PRIMARY KEY CHECK(id=1),
-    last_synced INTEGER
+    last_sync INTEGER
   )
 `).run();
 
 db.prepare(`
   CREATE TABLE IF NOT EXISTS categories (
-    name TEXT PRIMARY KEY
+    id TEXT PRIMARY KEY,
+    name TEXT 
   )
 `).run();
 
 
 
 export default db;
+export type {DatabaseType};

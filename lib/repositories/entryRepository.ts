@@ -1,6 +1,7 @@
 import { sheets_v4 } from "googleapis";
 import { getGoogleSheetsClient } from "../google-sheet-api";
 import { env } from "@/env";
+import { DbSyncHelper } from "../dbSyncHelper";
 
 
 
@@ -36,7 +37,7 @@ export class EntryRepository {
     const requestBody = {
       values: [rowData],
     };
-    console.log(rowData);
+ 
     const range = "A:G";
 
     this.sheetsClient?.spreadsheets.values.append({
@@ -46,6 +47,7 @@ export class EntryRepository {
       insertDataOption: "INSERT_ROWS",
       requestBody,
     });
+    DbSyncHelper.sinc();
   }
 
   private lastSync() {}

@@ -1,6 +1,6 @@
 
 import { EntryRepository } from "@/lib/repositories/entryRepository";
-import { EntryService } from "@/lib/services/EntryRepository";
+import { EntryService } from "@/lib/services/EntryService";
 import { NextResponse } from "next/server";
 
 const repository = new EntryRepository();

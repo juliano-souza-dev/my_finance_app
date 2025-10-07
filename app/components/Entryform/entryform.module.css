@@ -37,7 +37,15 @@
     flex-direction: column;
    
 }
-
+.formGroupCategory select{
+    max-height: 200px; /* Ajuste este valor conforme necessário */
+  
+  /* Garante que o scroll apareça quando o conteúdo exceder a altura máxima */
+  overflow-y: scroll;
+  
+  /* Opcional: Estilize a borda para ficar claro que é uma lista */
+  border: 1px solid #ccc; 
+}
 @media screen and (min-width: 481px) {
     .formRowGroup {
         flex-direction: row;
